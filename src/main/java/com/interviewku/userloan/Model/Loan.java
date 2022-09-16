@@ -21,21 +21,24 @@ public class Loan {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "loan_id")
     private int loanId;
-
+    @Column(name = "account_number")
+    private String accountNumber;
+    @Column(name = "loan_type")
+    private String loanType;
     @Column(name = "loan_amount")
     private float loanAmount;
-
-    @Temporal(value = TemporalType.DATE)
-    @Column(name = "trade_date")
-    private Date tradeDate = new Date(System.currentTimeMillis());
-
+    @Column(name = "loan_balance")
+    private float loanBalance;
+//    @Temporal(value = TemporalType.DATE)
+//    @Column(name = "trade_date")
+//    private Date tradeDate = new Date(System.currentTimeMillis());
     @Temporal(value = TemporalType.DATE)
     @Column(name = "loan_start_date", columnDefinition = "date")
     private Date loanStartDate;
 
-    @Temporal(value = TemporalType.DATE)
-    @Column(name = "loan_maturity_date")
-    private Date loanMaturityDate;
+//    @Temporal(value = TemporalType.DATE)
+//    @Column(name = "loan_maturity_date")
+//    private Date loanMaturityDate;
 
     @Column(name = "payment_frequency")
     private String paymentFrequency;

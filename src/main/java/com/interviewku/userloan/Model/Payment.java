@@ -16,6 +16,8 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "payment_id")
     private int paymentId;
+    @Column(name = "loan-id")
+    private int loanId;
 
     @Column(name = "payment_date")
     private Date paymentDate;
