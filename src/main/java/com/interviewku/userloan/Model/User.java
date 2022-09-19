@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -27,12 +28,11 @@ public class User {
     private String lastName;
     @Enumerated(EnumType.STRING)
     private Gender gender;
+    @Column(unique = true)
     private String email;
     private String password;
     private String phoneNumber;
     private String accountNumber;
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    @JsonSerialize(using = LocalDateSerializer.class)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDateTime dateOfBirth;
     @OneToOne(cascade = CascadeType.ALL)
@@ -40,5 +40,6 @@ public class User {
     private Address address;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     private List<Loan> loan;
+
 
 }

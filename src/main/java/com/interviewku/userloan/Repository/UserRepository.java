@@ -10,5 +10,8 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User,Long> {
     @Query(nativeQuery = true,value = "select * from user where email =:email ")
+    User findByEmail(String email);
+
+    @Query(nativeQuery = true,value = "select * from user where email =:email ")
     List<User> findAllByEmail(String email);
 }

@@ -1,6 +1,7 @@
 package com.interviewku.userloan.Dto.Response.User;
 
 import com.interviewku.userloan.Model.User;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
