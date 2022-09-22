@@ -18,6 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.*;
 import java.util.ArrayList;
@@ -145,18 +146,18 @@ class UserServiceTest {
         assertEquals("You have successfully  apply for this loan",savedLoan.getMessage());
 
         User user2=new User();
-        user.setUserId(2l);
+        user2.setUserId(2l);
         LoanRequest loan2 =new LoanRequest();
-        loan2.setLoanId(1);
+        loan2.setLoanId(2);
         loan2.setUser(user2);
-        loan2.setLoanType("business");
+        loan2.setLoanType("Education");
         loan2.setAccountNumber("01235");
         loan2.setLoanBalance(150000);
         loan2.setLoanAmount(2000000);
         loan2.setLoanStartDate(Date.from(Instant.now()));
         loan2.setPayment(null);
         loan2.setPaymentFrequency(null);
-        loan2.setInterestRate(2);
+        loan2.setInterestRate(1);
         LoanDto savedLoan2=loanService.createLoan(loan2);
         assertEquals("You have successfully  apply for this loan",savedLoan2.getMessage());
     }
@@ -169,17 +170,53 @@ class UserServiceTest {
 
     }
     @Test
-    @DisplayName("test that loan can be paid")
-    void testThatUserCanBePaid(){
-      Payment loanPayment=new Payment();
-      loanPayment.setLoanId(2);
-      loanPayment.setPaymentId(1);
-      loanPayment.setPaymentDate(Date.from(Instant.now()));
-      loanPayment.setPaymentAmount(100000);
-      PaymentResponse response=paymentService.payLoan(loanPayment,2);
-      assertEquals("payment successful",response.getMessage());
+    @DisplayName("test to approve loan")
+
+    void approveLoanForEligibleUser(){
+        LoanDto dto=loanService.approveLoan(2,"Education");
+        LoanDto dto2=loanService.approveLoan(1,"Business");
+        assertEquals("Loan approved successfully",dto.getMessage());
+        assertEquals("Loan approved successfully",dto2.getMessage());
+
     }
 
 
+    @Test
+    @DisplayName("test that loan can be paid")
+    void testThatUserCanBePaid(){
+     Loan loanPayment=new Loan();
+     loanPayment.setLoanId(2);
+     loanPayment.setLoanBalance(150000);
+     loanPayment.setLoanType("Education");
+     Payment payments=new Payment();
+     payments.setPaymentId(1);
+     payments.setPaymentDate(Date.from(Instant.now()));
+     payments.setPaymentStatus("");
+     payments.setPaymentAmount(150000);
+     payments.setLoanId(2);
+     PaymentResponse response=paymentService.payLoan(payments,2);
+      assertEquals("payment successful",response.getMessage());
+
+        Loan loan=new Loan();
+        loan.setLoanId(1);
+        loan.setLoanBalance(150000);
+        loan.setLoanType("Business");
+        Payment payment=new Payment();
+        payment.setPaymentId(2);
+        payment.setPaymentDate(Date.from(Instant.now()));
+        payment.setPaymentStatus("");
+        payment.setPaymentAmount(1000);
+        payment.setLoanId(1);
+        PaymentResponse response2=paymentService.payLoan(payment,1);
+       assertEquals("partial payment successful",response2.getMessage());
+    }
+
+    @Test
+    @DisplayName("test that user can search for payment")
+    void testThatUserCanSearchForPayment(){
+      PaymentResponse response=paymentService.searchPayment(2);
+      assertEquals("success",response.getMessage());
+
+    }
 
 }

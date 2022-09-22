@@ -10,5 +10,5 @@ import org.springframework.stereotype.Service;
 public interface LoanService {
      LoanDto createLoan(LoanRequest loanRequest);
      Loan searchLoan(String accountNumber);
-     LoanResponse approveLoan(int loanId);
+     LoanDto approveLoan(int loanId,String loanType);
 }

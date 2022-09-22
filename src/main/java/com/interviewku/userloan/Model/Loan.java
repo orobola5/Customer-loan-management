@@ -12,9 +12,9 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-//@Table(name = "loan")
+@Table(name = "loan")
 public class Loan {
-  @Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "loan_id")
     private int loanId;
@@ -33,6 +33,9 @@ public class Loan {
     private float interestRate;
     @ManyToOne
     private User user;
+
+    private String loanStatus;
+    private String paymentStatus;
 
 
 

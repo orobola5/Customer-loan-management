@@ -4,7 +4,10 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
-@Data
+import java.util.List;
+
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "payment")
@@ -15,7 +18,7 @@ public class Payment {
     @Column(name = "payment_id")
     private int paymentId;
 
-    @Column(name = "loan-id")
+    @Column(name = "loan_id")
     private int loanId;
 
     @Column(name = "payment_date")
@@ -26,5 +29,6 @@ public class Payment {
 
     @Column(name = "payment_amount")
     private float paymentAmount;
+
 
 }

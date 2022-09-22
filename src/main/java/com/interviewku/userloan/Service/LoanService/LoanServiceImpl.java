@@ -43,7 +43,17 @@ public class LoanServiceImpl implements LoanService {
     }
 
     @Override
-    public LoanResponse approveLoan(int loanId) {
-        return null;
+    public LoanDto approveLoan(int loanId, String loanType) {
+        LoanDto response= new LoanDto();
+        Loan existingLoan=loanRepository.findLoanByLoanIdAndLoanType(loanId,loanType);
+        if (existingLoan==null){
+            response.setMessage("Error approving the Loan");
+        }
+        else {
+            loanRepository.approveLoan(loanId);
+            response.setMessage("Loan approved successfully");
+
+        }
+        return response;
     }
 }

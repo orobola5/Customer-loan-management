@@ -8,6 +8,6 @@ import org.springframework.stereotype.Service;
 public interface PaymentService {
 
      PaymentResponse payLoan(Payment payments, int loanId);
-     PaymentResponse searchPayment(int transactionId);
+     PaymentResponse searchPayment(int paymentId);
 
 }
