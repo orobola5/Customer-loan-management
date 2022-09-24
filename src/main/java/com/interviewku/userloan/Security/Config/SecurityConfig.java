@@ -19,7 +19,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Deprecated
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private  final UserService userService;
+    private  final UserDetailsService userService;
+
+
     private  final BCryptPasswordEncoder bCryptPasswordEncoder;
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -42,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public DaoAuthenticationProvider daoAuthenticationProvider(){
         DaoAuthenticationProvider provider= new DaoAuthenticationProvider();
         provider.setPasswordEncoder(bCryptPasswordEncoder);
-        provider.setUserDetailsService((UserDetailsService) userService);
+        provider.setUserDetailsService(userService);
         return provider;
     }
 }

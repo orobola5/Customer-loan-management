@@ -15,7 +15,7 @@ public interface UserService {
     UserResponse createUser(UserRequest request);
     User searchUserByEmail(String email);
     UserRespoDto getAllUser();
-    UserResponse searchUserByLoan(Loan loan);
+
 
 
 

@@ -10,6 +10,9 @@ import com.interviewku.userloan.Model.User;
 import com.interviewku.userloan.Repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -20,8 +23,9 @@ import java.util.List;
 @AllArgsConstructor
 @Service
 @Configuration
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserDetailsService,UserService{
 
+    private static final String USER_NOT_FOUND_MSG =  "user with name is not found";
     private final UserRepository userRepository;
     private  final BCryptPasswordEncoder bCryptPasswordEncoder;
 
@@ -72,10 +76,13 @@ public class UserServiceImpl implements UserService{
     }
 
 
-
     @Override
-    public UserResponse searchUserByLoan(Loan loan) {
+    public UserDetails loadUserByUsername(String username)
+            throws UsernameNotFoundException {
+            return (UserDetails) userRepository.findUserByFirstName(username)
+                    .orElseThrow(()->
+                            new UsernameNotFoundException(
+                                    String.format(USER_NOT_FOUND_MSG,username)));
 
-        return null;
     }
 }
