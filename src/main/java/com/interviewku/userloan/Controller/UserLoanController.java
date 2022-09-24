@@ -25,7 +25,7 @@ public class UserLoanController {
     private final LoanService loanService;
     private final PaymentService paymentService;
 
-    @RequestMapping(method = RequestMethod.POST,value = "/user")
+    @PostMapping( "/user")
     public UserResponse createUser(@RequestBody UserRequest request){
         return userService.createUser(request);
     }
